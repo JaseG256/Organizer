@@ -13,7 +13,7 @@ public interface UserService extends CRUDService<User> {
 
     List<User> findByIdIn(List<Long> userIds);
 
-    Optional<User> findByUsername(String username);
+    User findByUsername(String username);
 
     Boolean existsByUsername(String username);
 

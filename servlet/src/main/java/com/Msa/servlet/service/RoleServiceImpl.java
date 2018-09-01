@@ -40,6 +40,6 @@ public class RoleServiceImpl implements RoleService{
 
     @Override
     public Optional<Role> findByName(RoleName roleName) {
-        return roleRepository.findByRoleName(roleName);
+        return roleRepository.findByName(roleName);
     }
 }
