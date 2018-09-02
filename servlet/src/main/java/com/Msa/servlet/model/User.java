@@ -58,8 +58,12 @@ public class User extends AbstractModelDateAudit {
             inverseJoinColumns = @JoinColumn(name = "addrequest_id"))
     private Set<AddRequest> receivedAddRequests = new HashSet<>();
 
-//    private HashMap<Integer, AddRequest> sentAddRequests = new HashMap<Integer, AddRequest>();
-//
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_sent_addrequests",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "addrequest_id"))
+    private Set<AddRequest> sentAddRequests = new HashSet<>();
+
 //    private HashMap<Integer, User> contacts = new HashMap<Integer, User>();
 
 
@@ -132,13 +136,17 @@ public class User extends AbstractModelDateAudit {
 
     public void setPrivateChats(Set<PrivateChat> privateChats) { this.privateChats = privateChats; }
 
+    public List<GroupChat> getGroupChats() { return groupChats; }
+
+    public void setGroupChats(List<GroupChat> groupChats) { this.groupChats = groupChats; }
+
     public Set<AddRequest> getReceivedAddRequests() { return receivedAddRequests; }
 
     public void setReceivedAddRequests(Set<AddRequest> receivedAddRequests) { this.receivedAddRequests = receivedAddRequests; }
 
-    public List<GroupChat> getGroupChats() { return groupChats; }
+    public Set<AddRequest> getSentAddRequests() { return sentAddRequests; }
 
-    public void setGroupChats(List<GroupChat> groupChats) { this.groupChats = groupChats; }
+    public void setSentAddRequests(Set<AddRequest> sentAddRequests) { this.sentAddRequests = sentAddRequests; }
 
     @Override
     public String toString() {
