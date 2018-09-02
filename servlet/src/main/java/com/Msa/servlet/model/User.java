@@ -26,7 +26,6 @@ public class User extends AbstractModelDateAudit {
     @NotBlank
     private String username;
 
-    @NotBlank
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_status",
             joinColumns = @JoinColumn(name = "user_id"),
