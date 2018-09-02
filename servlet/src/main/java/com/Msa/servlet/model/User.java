@@ -52,8 +52,8 @@ public class User extends AbstractModelDateAudit {
             inverseJoinColumns = @JoinColumn(name = "group_chat_id"))
     private List<GroupChat> groupChats = new ArrayList<>();
 
-//    private HashMap<Integer, AddRequest> receivedAddRequests = new HashMap<Integer, AddRequest>();
-//
+    private HashMap<Long, AddRequest> receivedAddRequests = new HashMap<>();
+
 //    private HashMap<Integer, AddRequest> sentAddRequests = new HashMap<Integer, AddRequest>();
 //
 //    private HashMap<Integer, User> contacts = new HashMap<Integer, User>();
@@ -123,6 +123,14 @@ public class User extends AbstractModelDateAudit {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public Map<Long, PrivateChat> getPrivateChats() { return privateChats; }
+
+    public void setPrivateChats(Map<Long, PrivateChat> privateChats) { this.privateChats = privateChats; }
+
+    public List<GroupChat> getGroupChats() { return groupChats; }
+
+    public void setGroupChats(List<GroupChat> groupChats) { this.groupChats = groupChats; }
 
     @Override
     public String toString() {
