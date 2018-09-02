@@ -27,6 +27,13 @@ public class User extends AbstractModelDateAudit {
     private String username;
 
     @NotBlank
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_status",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "status_id"))
+    private Set<UserStatus> status = null;
+
+    @NotBlank
     @NaturalId
     @Email
     private String email;
@@ -107,6 +114,10 @@ public class User extends AbstractModelDateAudit {
     public void setUsername(String userName) {
         this.username = userName;
     }
+
+    public void setStatus(Set<UserStatus> status) { this.status = status; }
+
+    public Set<UserStatus> getStatus() { return status; }
 
     public String getEmail() {
         return email;
