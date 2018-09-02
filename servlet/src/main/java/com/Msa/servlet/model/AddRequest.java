@@ -1,8 +1,15 @@
 package com.Msa.servlet.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "add_requests")
 public class AddRequest {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private User fromUser;
     private User toUser;
     private Date date;
