@@ -34,8 +34,25 @@ public class User extends AbstractModelDateAudit {
     @NotBlank
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_private_chats",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "private_chat_id"))
+    private Map<Long, PrivateChat> privateChats = new HashMap<>();
+
+//    private List<GroupChat> groupChats = new ArrayList<GroupChat>();
+//
+//    private HashMap<Integer, AddRequest> receivedAddRequests = new HashMap<Integer, AddRequest>();
+//
+//    private HashMap<Integer, AddRequest> sentAddRequests = new HashMap<Integer, AddRequest>();
+//
+//    private HashMap<Integer, User> contacts = new HashMap<Integer, User>();
 
 
 //    @OneToMany(mappedBy = "user")

@@ -1,5 +1,10 @@
 package com.Msa.servlet.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "private-chats")
 public class PrivateChat extends Conversation {
 
     public PrivateChat(User user1, User user2) {
