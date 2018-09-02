@@ -17,7 +17,7 @@ public class ServletApplication {
 
 	@PostConstruct
 	void init() {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+		TimeZone.setDefault(TimeZone.getTimeZone("TimeZone"));
 	}
 
 	public static void main(String[] args) {
