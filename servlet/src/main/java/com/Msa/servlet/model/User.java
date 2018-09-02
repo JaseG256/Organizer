@@ -46,8 +46,12 @@ public class User extends AbstractModelDateAudit {
             inverseJoinColumns = @JoinColumn(name = "private_chat_id"))
     private Map<Long, PrivateChat> privateChats = new HashMap<>();
 
-//    private List<GroupChat> groupChats = new ArrayList<GroupChat>();
-//
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_group_chats",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_chat_id"))
+    private List<GroupChat> groupChats = new ArrayList<>();
+
 //    private HashMap<Integer, AddRequest> receivedAddRequests = new HashMap<Integer, AddRequest>();
 //
 //    private HashMap<Integer, AddRequest> sentAddRequests = new HashMap<Integer, AddRequest>();
