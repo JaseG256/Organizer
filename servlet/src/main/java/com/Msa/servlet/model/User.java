@@ -26,11 +26,7 @@ public class User extends AbstractModelDateAudit {
     @NotBlank
     private String username;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_status",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "status_id"))
-    private Set<UserStatus> status = null;
+    private UserStatus status = null;
 
     @NotBlank
     @NaturalId
@@ -50,7 +46,7 @@ public class User extends AbstractModelDateAudit {
     @JoinTable(name = "user_private_chats",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "private_chat_id"))
-    private Set<PrivateChat> privateChats = new HashSet<>();
+    private Map<Long, PrivateChat> privateChats = new HashMap<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_group_chats",
@@ -58,19 +54,11 @@ public class User extends AbstractModelDateAudit {
             inverseJoinColumns = @JoinColumn(name = "group_chat_id"))
     private List<GroupChat> groupChats = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_received_addrequests",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "addrequest_id"))
-    private Set<AddRequest> receivedAddRequests = new HashSet<>();
+    private HashMap<Long, AddRequest> receivedAddRequests = new HashMap<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_sent_addrequests",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "addrequest_id"))
-    private Set<AddRequest> sentAddRequests = new HashSet<>();
+    private HashMap<Long, AddRequest> sentAddRequests = new HashMap<>();
 
-//    private HashMap<Integer, User> contacts = new HashMap<Integer, User>();
+    private HashMap<Long, User> contacts = new HashMap<>();
 
 
 //    @OneToMany(mappedBy = "user")
@@ -114,9 +102,13 @@ public class User extends AbstractModelDateAudit {
         this.username = userName;
     }
 
-    public void setStatus(Set<UserStatus> status) { this.status = status; }
+    public UserStatus getStatus() {
+        return status;
+    }
 
-    public Set<UserStatus> getStatus() { return status; }
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
 
     public String getEmail() {
         return email;
@@ -142,21 +134,69 @@ public class User extends AbstractModelDateAudit {
         this.roles = roles;
     }
 
-    public Set<PrivateChat> getPrivateChats() { return privateChats; }
+    public Map<Long, PrivateChat> getPrivateChats() {
+        return privateChats;
+    }
 
-    public void setPrivateChats(Set<PrivateChat> privateChats) { this.privateChats = privateChats; }
+    public void setPrivateChats(Map<Long, PrivateChat> privateChats) {
+        this.privateChats = privateChats;
+    }
 
     public List<GroupChat> getGroupChats() { return groupChats; }
 
     public void setGroupChats(List<GroupChat> groupChats) { this.groupChats = groupChats; }
 
-    public Set<AddRequest> getReceivedAddRequests() { return receivedAddRequests; }
+    public HashMap<Long, AddRequest> getReceivedAddRequests() { return receivedAddRequests; }
 
-    public void setReceivedAddRequests(Set<AddRequest> receivedAddRequests) { this.receivedAddRequests = receivedAddRequests; }
+    public void setReceivedAddRequests(HashMap<Long, AddRequest> receivedAddRequests) { this.receivedAddRequests = receivedAddRequests; }
 
-    public Set<AddRequest> getSentAddRequests() { return sentAddRequests; }
+    public HashMap<Long, AddRequest> getSentAddRequests() { return sentAddRequests; }
 
-    public void setSentAddRequests(Set<AddRequest> sentAddRequests) { this.sentAddRequests = sentAddRequests; }
+    public void setSentAddRequests(HashMap<Long, AddRequest> sentAddRequests) { this.sentAddRequests = sentAddRequests; }
+
+    public boolean addContact(User user) {
+        if (contacts.containsKey(user.getId())) {
+            return false;
+        } else {
+            contacts.put(user.getId(), user);
+            return true;
+        }
+    }
+
+    public void receivedAddRequest(AddRequest req) {
+        Long senderId = req.getFromUser().getId();
+        if (!receivedAddRequests.containsKey(senderId)) {
+            receivedAddRequests.put(senderId, req);
+        }
+    }
+
+    public void sentAddRequest(AddRequest req) {
+        Long receiverId = req.getFromUser().getId();
+        if (!sentAddRequests.containsKey(receiverId)) {
+            sentAddRequests.put(receiverId, req);
+        }
+    }
+
+    public void removeAddRequest(AddRequest req) {
+        if (req.getToUser() == this) {
+            receivedAddRequests.remove(req);
+        } else if (req.getFromUser() == this) {
+            sentAddRequests.remove(req);
+        }
+    }
+
+    public void requestAddUser(String accountName) {
+        UserManager.getInstance().addUser(this, accountName);
+    }
+
+    public void addConversation(PrivateChat conversation) {
+        User otherUser = conversation.getOtherParticipant(this);
+        privateChats.put(otherUser.getId(), conversation);
+    }
+
+    public void addConversation(GroupChat conversation) {
+        groupChats.add(conversation);
+    }
 
     @Override
     public String toString() {
