@@ -10,12 +10,12 @@
       <th>Email</th>
       <th>Action</th>
     </tr>
-    </theadv
+  </thead>
     <tbody>
     <tr *ngFor="let user of users">
-      <td class="hidden"></td>
-      <td></td>
-      <td></td>
+      <td class="hidden">{{user.id}}</td>
+      <td>{{user.username}}</td>
+      <td>{{user.email}}</td>
       <td></td>
       <td><button class="btn btn-danger" (click)="deleteUser(user)"> Delete User</button></td>
     </tr>

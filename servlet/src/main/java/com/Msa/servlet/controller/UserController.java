@@ -15,12 +15,17 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin("http://localhost:8100")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/api")
 public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
+
+//    @PostMapping
+//    public User createUser(@RequestBody  User user) {
+//        return userService.saveOrUpdate(user);
+//    }
 
     @GetMapping(path = "/users")
     public List<User> getAllUsers(){
