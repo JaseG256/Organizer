@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['id', 'username', 'email'];
   dataSource = new MatTableDataSource<User>();
   // users: User[];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
 
   constructor(private router: Router, private userService: UserService) {
 
@@ -29,6 +32,11 @@ export class UserComponent implements OnInit {
         this.dataSource.data = data;
       }
     );
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   deleteUser(user: User): void {
