@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class UserComponent implements OnInit {
 
-  displayedColumns = ['id', 'username'];
+  displayedColumns = ['id', 'username', 'email'];
   dataSource = new MatTableDataSource<User>();
   // users: User[];
 
@@ -24,6 +24,11 @@ export class UserComponent implements OnInit {
     // .subscribe(data => {
     //   this.users = data;
     // });
+    this.userService.getUsers()
+      .subscribe(data => {
+        this.dataSource.data = data;
+      }
+    );
   }
 
   deleteUser(user: User): void {
