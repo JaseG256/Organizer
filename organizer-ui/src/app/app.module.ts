@@ -8,7 +8,9 @@ import { AppRoutingModule } from './app.routing.module';
 import {UserService} from './user/user.service';
 import {HttpClientModule} from '@angular/common/http';
 import {AddUserComponent} from './user/add-user.component';
-
+import { CustomMaterialModule } from './core/material.module';
+// import { CustomMaterialModule } from './core/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import {AddUserComponent} from './user/add-user.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    CustomMaterialModule,
+    BrowserAnimationsModule,
     FormsModule
   ],
   providers: [UserService],
