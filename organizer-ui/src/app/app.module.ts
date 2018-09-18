@@ -11,12 +11,14 @@ import {AddUserComponent} from './user/add-user.component';
 import { CustomMaterialModule } from './core/material.module';
 // import { CustomMaterialModule } from './core/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
-    AddUserComponent
+    AddUserComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
