@@ -12,6 +12,7 @@ import { CustomMaterialModule } from './core/material.module';
 // import { CustomMaterialModule } from './core/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
+import { AuthService } from './core/auth.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { LoginComponent } from './login/login.component';
     BrowserAnimationsModule,
     FormsModule
   ],
-  providers: [UserService],
+  providers: [UserService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
