@@ -22,9 +22,12 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.authService.attemptAuth(this.username, this.password).subscribe(
-      data => {
-        this.token.saveToken(data.token);
-        this.router.navigate(['user']);
+      () => {
+        // console.log(data);
+        // this.token.saveToken(data);
+        // console.log(data);
+        console.log(this.token.getToken());
+        this.router.navigate(['users']);
       }
     );
 

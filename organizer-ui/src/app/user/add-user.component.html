@@ -27,7 +27,13 @@
         <tr>
           <td>
             <mat-form-field class="example-full-width">
-            <input matInput placeholder="Email" [(ngModel)]="user.email" name="email" required>
+            <input matInput placeholder="Email"[formControl]="addUserFormControl"
+            [errorStateMatcher]="matcher" [(ngModel)]="user.email" name="email" required>
+            <mat-error *ngIf="addUserFormControl.hasError('email') &&
+            !addUserFormControl.hasError('required')">Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="addUserFormControl.hasError('required')">Email is <strong>required</strong>
+          </mat-error>
            </mat-form-field>
           </td>
         </tr>
