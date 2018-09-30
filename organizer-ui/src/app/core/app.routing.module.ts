@@ -7,16 +7,19 @@ import { LoginComponent } from '../login/login.component';
 import { UserDetailsComponent } from '../user/user-details.component';
 
 const routes: Routes = [
-    { path: 'users', component: UserComponent },
-    { path: 'add', component: AddUserComponent },
-    { path: 'login', component: LoginComponent },
-    { path: 'user/me', component: UserDetailsComponent },
+    { path: 'api/users', component: UserComponent },
+    { path: 'api/auth/signup', component: AddUserComponent },
+    { path: 'api/auth/login', component: LoginComponent },
+    { path: 'users/:username', component: UserDetailsComponent },
     { path: '', component: LoginComponent }
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(
+            routes,
+        // {enableTracing: true}
+    )
     ],
     exports: [
         RouterModule

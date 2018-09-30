@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import * as moment from 'moment';
 
 const TOKEN_KEY = 'Authtoken';
 
@@ -14,11 +14,12 @@ export class TokenStorage {
     }
 
     public saveToken(token: string) {
-        window.sessionStorage.removeItem(TOKEN_KEY);
+        // window.sessionStorage.removeItem(TOKEN_KEY);
         window.sessionStorage.setItem(TOKEN_KEY, token);
+        // const expiresAt = moment().add(this.getToken().expiresIn, 'second');
     }
 
     public getToken(): string {
-        return sessionStorage.getItem(TOKEN_KEY);
+        return window.sessionStorage.getItem(TOKEN_KEY);
     }
 }

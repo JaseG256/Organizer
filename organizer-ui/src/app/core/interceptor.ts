@@ -16,14 +16,22 @@ export class Interceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler):
      Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-        // const idToken = localStorage.getItem('id_token');
+        const idToken = this.token.getToken();
+        console.log(localStorage.getItem('token'));
         let authReq = req;
 
-        if (this.token.getToken()) {
+        if (localStorage.getItem('token')) {
             authReq = req.clone({
-                headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + this.token.getToken())
+                headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + localStorage
+                .getItem('token').substring(1, localStorage.getItem('token').length - 1))
             });
-            // console.log(this.token.getToken());
+            console.log('See token');
+            console.log(req.headers);
+            console.log(req.body);
+            console.log(req);
+            console.log(req.params);
+            console.log(req.reportProgress);
+            console.log(idToken);
             console.log(authReq);
             return next.handle(authReq);
         } else {

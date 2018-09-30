@@ -5,6 +5,7 @@ import { User } from '../models/user.model';
 import { UserService } from './user.service';
 import { FormControl, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../core/input-error-state-matcher.component';
+import { AuthService } from '../core/auth.service';
 
 @Component({
     templateUrl: './add-user.component.html'
@@ -19,14 +20,21 @@ export class AddUserComponent {
 
     matcher = new MyErrorStateMatcher();
 
-    constructor(private router: Router, private userService: UserService) {
+    constructor(private router: Router, private userService: UserService, private authService: AuthService) { }
 
+    createUser() {
+        this.authService.registerUser(this.user)
+        .subscribe(
+            res => console.log(res),
+            // alert('User created successfully'),
+            err => console.log(err)
+            );
     }
 
-    createUser(): void {
-        this.userService.createUser(this.user)
-        .subscribe(data => {
-            alert('User created successfully.');
-        });
-    }
+    // createUser(): void {
+    //     this.userService.createUser(this.user)
+    //     .subscribe(data => {
+    //         alert('User created successfully.');
+    //     });
+    // }
 }

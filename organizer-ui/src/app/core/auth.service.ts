@@ -4,19 +4,22 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import * as moment from 'moment';
 import { TokenStorage } from './token.storage';
+import { catchError, retry } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
 
-    constructor(private http: HttpClient, private token: TokenStorage) { }
+    private signupUrl = 'http://localhost:8080/api/auth/signup';
+    private loginUrl = 'http://localhost:8080/api/auth/login';
+    constructor(private http: HttpClient) { }
+
+    registerUser(user) {
+        return this.http.post<any>(this.signupUrl, user);
+    }
 
     attemptAuth(username: string, password: string): Observable<any> {
         const credentials = { username: username, password: password };
-
-        return this.http.post<any>('http://localhost:8080/login', credentials)
-        .pipe(
-         tap(res => this.token.saveToken(res.token))
-        );
+        return this.http.post<any>(this.loginUrl, credentials);
 
         // const credentials = { username: username, password: password };
         // console.log('attemptAuth ::');

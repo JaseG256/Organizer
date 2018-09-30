@@ -13,7 +13,8 @@ export class UserComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['id', 'username', 'email'];
   dataSource = new MatTableDataSource<User>();
-  // users: User[];
+  users: User[];
+  selectedUser: User;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -23,10 +24,10 @@ export class UserComponent implements OnInit, AfterViewInit {
    }
 
   ngOnInit() {
-    // this.userService.getUsers()
-    // .subscribe(data => {
-    //   this.users = data;
-    // });
+    this.userService.getUsers()
+    .subscribe(data => {
+      this.users = data;
+    });
     this.userService.getUsers()
       .subscribe(data => {
         this.dataSource.data = data;
@@ -34,9 +35,17 @@ export class UserComponent implements OnInit, AfterViewInit {
     );
   }
 
+  onSelect(user: User): void {
+    this.selectedUser = user;
+  }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  showDetails(row: any) {
+    this.router.navigate(['api/users/' + row.username]);
   }
 
   deleteUser(user: User): void {

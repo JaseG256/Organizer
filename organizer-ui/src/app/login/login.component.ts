@@ -20,15 +20,14 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login(): void {
-    this.authService.attemptAuth(this.username, this.password).subscribe(
-      () => {
-        // console.log(data);
-        // this.token.saveToken(data);
-        // console.log(data);
-        console.log(this.token.getToken());
-        this.router.navigate(['users']);
-      }
+  loginUser(): void {
+    this.authService.attemptAuth(this.username, this.password)
+      .subscribe(
+        res => { console.log(res),
+        localStorage.setItem('token', JSON.stringify(res.accessToken)),
+        localStorage.setItem('bearer', JSON.stringify(res.tokenType));
+        },
+        err => console.log(err)
     );
 
     // if (this.username === 'admin' && this.password === 'admin') {
