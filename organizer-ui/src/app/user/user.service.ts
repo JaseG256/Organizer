@@ -18,6 +18,10 @@ export class UserService {
         return this.httpclient.get<User[]>(this.userUrl + '/users');
     }
 
+    public getCurrentUser() {
+        return this.httpclient.get<User>(this.userUrl + '/user/me');
+    }
+
     public deleteUser(user) {
         return this.httpclient.delete(this.userUrl + '/' + user.id);
     }

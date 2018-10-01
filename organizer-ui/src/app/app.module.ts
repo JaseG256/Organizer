@@ -17,6 +17,8 @@ import { TokenStorage } from './core/token.storage';
 import { Interceptor } from './core/interceptor';
 import { ErrorDialogComponent } from './core/error-dialog.component';
 import { UserDetailsComponent } from './user/user-details.component';
+import { UploadImageComponent } from './upload-image/upload-image.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { UserDetailsComponent } from './user/user-details.component';
     AddUserComponent,
     UserDetailsComponent,
     LoginComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    UploadImageComponent,
+    MyProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -25,8 +25,12 @@ export class AddUserComponent {
     createUser() {
         this.authService.registerUser(this.user)
         .subscribe(
-            res => console.log(res),
+            res => {
+                console.log(res);
+                // localStorage.setItem('token', JSON.stringify(res.accessToken)),
+                // this.router.navigate(['api/users']);
             // alert('User created successfully'),
+            },
             err => console.log(err)
             );
     }
